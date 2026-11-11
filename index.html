@@ -144,6 +144,39 @@ footer{background:var(--ind-d);color:#9db4e6}
 .about p,.job p{font-size:1.05rem}
 .facts dd{color:var(--ind-d)}
 .pb h4{margin-top:28px}
+
+/* responsive */
+body{overflow-x:hidden}
+.sk{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+@media(min-width:900px) and (max-width:1180px){.big{font-size:clamp(3.6rem,8.4vw,7rem)}.hr{padding-right:clamp(20px,3vw,40px)}}
+@media(min-width:600px) and (max-width:899px){.nav>a{display:inline}.hl{padding-bottom:56px}.pw img{height:clamp(420px,62vw,560px)}.big{font-size:clamp(5rem,16vw,9rem)}}
+@media(max-width:899px){
+.big{font-size:clamp(3.6rem,21vw,8rem);margin-bottom:18px}
+.pw img{height:clamp(340px,95vw,520px)}
+.menu summary{width:44px;height:44px}
+.card{max-width:100%;width:100%}
+.avail strong{max-width:none}
+.ph{min-height:190px}
+.ph::after{inset:14px}
+}
+@media(max-width:560px){
+section{padding:64px 0}
+h2{margin-bottom:32px}
+.sk>div{padding:22px}
+.sk h3{font-size:1.35rem}
+.pb{padding:22px}
+.pb h3{font-size:2rem}
+.pc .chips li{min-height:34px;padding:0 14px;font-size:.82rem}
+.facts div{flex-direction:column;gap:2px}.facts dd{text-align:left}
+.cl a,.cl div{flex-direction:column;gap:2px;padding:16px 0}
+.cl a:hover{padding-left:0;padding-right:0}
+.ct h2{font-size:clamp(2.8rem,13vw,4rem)}
+.ed li{padding:14px 0}
+.job{gap:18px}
+.cta{min-height:50px}
+}
+@media(max-width:360px){.brand{font-size:.95rem}.stack span{width:32px;height:32px}}
+@media(hover:none){.pc:hover,.sk>div:hover{transform:none;box-shadow:none}}
 </style>
 </head>
 <body>
