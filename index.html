@@ -152,37 +152,40 @@ dl{margin:0}
 
 /* ---------- work ---------- */
 .projects{display:grid;gap:40px}
-.pc{background:var(--ind-d);color:#fff;border-radius:32px;overflow:hidden;display:grid;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-.pc:hover{transform:translateY(-4px);box-shadow:0 30px 60px -24px rgba(11,31,77,.5)}
-@media(min-width:960px){.pc{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}.pc.flip{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}.pc.flip .gal{order:2}}
-.pb{padding:clamp(28px,4.5vw,56px);display:flex;flex-direction:column;justify-content:center;min-width:0}
-.pb h3{font-size:clamp(2.2rem,4.2vw,3.4rem);line-height:1;margin:18px 0 14px;overflow-wrap:break-word}
-.pb .sub{color:#9db4e6;margin-bottom:22px;font-size:.95rem}
-.pb h4{color:#60a5fa;margin-top:28px}
-.pb li{padding:10px 0 10px 22px;position:relative;border-bottom:1px solid #1f3a7a;font-size:.98rem;color:#dbe5fb}
-.pb li::before{content:"";position:absolute;left:0;top:1.3em;width:7px;height:7px;border-radius:50%;background:#60a5fa}
-.award{display:inline-flex;align-items:center;gap:8px;background:#2563eb;color:#fff;border-radius:999px;padding:6px 14px;font-size:.8rem;font-weight:600;width:fit-content}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.chips li{border:1px solid #2d4a8f;border-radius:999px;background:rgba(255,255,255,.05);padding:0 16px;min-height:36px;display:inline-flex;align-items:center;font-size:.85rem;color:#dbeafe;transition:background .25s,border-color .25s}
-.chips li::before{display:none}
-.chips li:hover{background:rgba(96,165,250,.18);border-color:#60a5fa}
-.pb .chips li{border-bottom:1px solid #2d4a8f;padding:0 16px}
+.pc{background:var(--ind-d);color:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 50px -28px rgba(11,31,77,.55);transition:transform .4s var(--ease),box-shadow .4s var(--ease);min-width:0}
+.pc:hover{transform:translateY(-4px);box-shadow:0 34px 60px -26px rgba(11,31,77,.6)}
 
-/* gallery */
-.gal{padding:clamp(16px,2.4vw,28px);display:grid;gap:14px;align-content:center;background:radial-gradient(circle at 30% 10%,#1d3f8f 0,#0b1f4d 70%);min-width:0}
-.gal-main{position:relative;margin:0;border:0;padding:0;border-radius:18px;overflow:hidden;background:#081a40;aspect-ratio:16/10;cursor:zoom-in;box-shadow:0 20px 40px -20px rgba(0,0,0,.6);width:100%}
-.gal-main img{width:100%;height:100%;object-fit:contain;transition:opacity .35s var(--ease),transform .6s var(--ease)}
-.gal-main:hover img{transform:scale(1.015)}
-.gal-main::after{content:"View";position:absolute;right:14px;bottom:14px;background:rgba(11,31,77,.8);color:#fff;font:600 .72rem Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;border-radius:999px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s var(--ease)}
+/* gallery: full-bleed inside the card, same width as the card */
+.gal{display:flex;flex-direction:column;background:#081a40;min-width:0}
+.gal-main{position:relative;display:block;width:100%;margin:0;border:0;padding:0;aspect-ratio:2/1;overflow:hidden;background:#081a40;cursor:zoom-in}
+.gal-main img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:opacity .35s var(--ease),transform .7s var(--ease)}
+.gal-main:hover img{transform:scale(1.02)}
+.gal-main::after{content:"View larger";position:absolute;right:16px;bottom:16px;background:rgba(11,31,77,.85);color:#fff;font:600 .72rem Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:999px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s var(--ease)}
 .gal-main:hover::after{opacity:1;transform:none}
 .gal-main.fading img{opacity:0}
-.gal-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.gal-thumbs button{padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;aspect-ratio:16/10;background:#081a40;cursor:pointer;opacity:.5;transition:opacity .25s,border-color .25s,transform .25s var(--ease)}
-.gal-thumbs button:hover{opacity:.9;transform:translateY(-2px)}
-.gal-thumbs button[aria-pressed="true"]{opacity:1;border-color:#60a5fa}
-.gal-thumbs img{width:100%;height:100%;object-fit:cover}
+.gal-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.2vw,14px);padding:clamp(14px,2vw,20px) clamp(16px,2.6vw,28px);background:var(--ind-d);border-top:1px solid #1f3a7a}
+.gal-thumbs button{padding:0;border:0;border-radius:10px;overflow:hidden;aspect-ratio:2/1;background:#081a40;cursor:pointer;opacity:.45;box-shadow:inset 0 0 0 2px transparent;transition:opacity .25s,box-shadow .25s,transform .25s var(--ease)}
+.gal-thumbs button:hover{opacity:.85;transform:translateY(-2px)}
+.gal-thumbs button[aria-pressed="true"]{opacity:1;box-shadow:inset 0 0 0 2px #60a5fa}
+.gal-thumbs img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .gal-thumbs button:focus-visible{outline-offset:2px}
-.gal-count{font-size:.8rem;color:#9db4e6;justify-self:start}
+
+/* text: header on the left, details on the right */
+.pb{padding:clamp(28px,4vw,52px);display:grid;gap:clamp(24px,3vw,40px);min-width:0}
+@media(min-width:960px){.pb{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,5vw,80px);align-items:start}}
+.pb-head{min-width:0}
+.pb h3{font-size:clamp(2.2rem,4.2vw,3.4rem);line-height:1;margin:18px 0 14px;overflow-wrap:break-word}
+.pb .sub{color:#9db4e6;margin-bottom:18px;font-size:.95rem}
+.pb-head p:not(.sub){color:#dbe5fb}
+.pb h4{color:#60a5fa;margin:0 0 6px}
+.pb-body{min-width:0}
+.pb li{padding:12px 0 12px 22px;position:relative;border-bottom:1px solid #1f3a7a;font-size:.98rem;color:#dbe5fb}
+.pb li::before{content:"";position:absolute;left:0;top:1.35em;width:7px;height:7px;border-radius:50%;background:#60a5fa}
+.award{display:inline-flex;align-items:center;gap:8px;background:#2563eb;color:#fff;border-radius:999px;padding:6px 14px;font-size:.8rem;font-weight:600;width:fit-content}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.chips li{border:1px solid #2d4a8f;border-radius:999px;background:rgba(255,255,255,.05);padding:0 16px;min-height:36px;display:inline-flex;align-items:center;font-size:.85rem;color:#dbeafe;border-bottom:1px solid #2d4a8f;transition:background .25s,border-color .25s}
+.chips li::before{display:none}
+.chips li:hover{background:rgba(96,165,250,.18);border-color:#60a5fa}
 
 /* lightbox */
 dialog.lb{border:0;padding:0;background:transparent;max-width:min(96vw,1400px);max-height:92vh;overflow:visible}
@@ -246,6 +249,7 @@ footer{background:var(--ind-d);color:#9db4e6;padding:32px 0 calc(32px + env(safe
   .ed li:hover,.facts div:hover,.job li:hover{padding-left:0}
   .facts div:hover{padding-left:4px;padding-right:4px}
   .gal-thumbs{gap:8px}
+  .pc{border-radius:22px}
   .pill{min-height:50px}
   .cta{min-height:52px}
 }
@@ -355,43 +359,42 @@ footer{background:var(--ind-d);color:#9db4e6;padding:32px 0 calc(32px + env(safe
   <p class="eyebrow rv">04 · Selected work</p>
   <h2 class="rv">Selected work</h2>
   <div class="projects">
-
     <article class="pc rv">
       <div class="gal" data-gal>
-        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/job-interview/job-interview.webp" alt="JobInterviewPro screenshot 1" width="1600" height="773"></button>
-        <div class="gal-thumbs" role="group" aria-label="JobInterviewPro screenshots">
-          <button type="button" aria-pressed="true" data-src="images/job-interview/job-interview.webp" data-alt="JobInterviewPro screenshot 1"><img src="images/job-interview/job-interview.webp" alt="" loading="lazy"></button>
-          <button type="button" aria-pressed="false" data-src="images/job-interview/job-interview1.webp" data-alt="JobInterviewPro screenshot 2"><img src="images/job-interview/job-interview1.webp" alt="" loading="lazy"></button>
-          <button type="button" aria-pressed="false" data-src="images/job-interview/job-interview2.webp" data-alt="JobInterviewPro screenshot 3"><img src="images/job-interview/job-interview2.webp" alt="" loading="lazy"></button>
-        </div>
+        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/job-interview/job-interview.webp" alt="JobInterviewPro screenshot 1" width="1600" height="800"></button>
+        <div class="gal-thumbs" role="group" aria-label="JobInterviewPro screenshots"><button type="button" aria-pressed="true" data-src="images/job-interview/job-interview.webp" data-alt="JobInterviewPro screenshot 1" aria-label="Show JobInterviewPro screenshot 1"><img src="images/job-interview/job-interview.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/job-interview/job-interview1.webp" data-alt="JobInterviewPro screenshot 2" aria-label="Show JobInterviewPro screenshot 2"><img src="images/job-interview/job-interview1.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/job-interview/job-interview2.webp" data-alt="JobInterviewPro screenshot 3" aria-label="Show JobInterviewPro screenshot 3"><img src="images/job-interview/job-interview2.webp" alt="" loading="lazy"></button></div>
       </div>
       <div class="pb">
-        <span class="award">System-Making Contest Winner, 2025</span>
-        <h3>JobInterviewPro</h3>
-        <p class="sub">Web application · My role: Software Tester</p>
-        <p>An AI-assisted web application that helps users practice job interviews and prepare for employment opportunities.</p>
-        <h4>What I did</h4>
-        <ul><li>Tested application features against intended requirements.</li><li>Identified and documented bugs and unexpected behavior.</li><li>Evaluated user experience and application reliability.</li><li>Helped make sure the application worked as intended before release.</li></ul>
-        <ul class="chips"><li>Manual Testing</li><li>Functional Testing</li><li>Defect Reporting</li></ul>
+        <div class="pb-head">
+          <span class="award">System-Making Contest Winner, 2025</span>
+          <h3>JobInterviewPro</h3>
+          <p class="sub">Web application · My role: Software Tester</p>
+          <p>An AI-assisted web application that helps users practice job interviews and prepare for employment opportunities.</p>
+        </div>
+        <div class="pb-body">
+          <h4>What I did</h4>
+          <ul><li>Tested application features against intended requirements.</li><li>Identified and documented bugs and unexpected behavior.</li><li>Evaluated user experience and application reliability.</li><li>Helped make sure the application worked as intended before release.</li></ul>
+          <ul class="chips"><li class="chip">Manual Testing</li><li class="chip">Functional Testing</li><li class="chip">Defect Reporting</li></ul>
+        </div>
       </div>
     </article>
-
-    <article class="pc flip rv">
+    <article class="pc rv">
       <div class="gal" data-gal>
-        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/eco-smart/eco-smart.webp" alt="Eco-Smart Station screenshot 1" width="1600" height="766"></button>
-        <div class="gal-thumbs" role="group" aria-label="Eco-Smart Station photos">
-          <button type="button" aria-pressed="true" data-src="images/eco-smart/eco-smart.webp" data-alt="Eco-Smart Station photo 1"><img src="images/eco-smart/eco-smart.webp" alt="" loading="lazy"></button>
-          <button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart1.webp" data-alt="Eco-Smart Station photo 2"><img src="images/eco-smart/eco-smart1.webp" alt="" loading="lazy"></button>
-          <button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart2.webp" data-alt="Eco-Smart Station photo 3"><img src="images/eco-smart/eco-smart2.webp" alt="" loading="lazy"></button>
-        </div>
+        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/eco-smart/eco-smart.webp" alt="Eco-Smart Station screenshot 1" width="1600" height="800"></button>
+        <div class="gal-thumbs" role="group" aria-label="Eco-Smart Station (RainErgy) screenshots"><button type="button" aria-pressed="true" data-src="images/eco-smart/eco-smart.webp" data-alt="Eco-Smart Station screenshot 1" aria-label="Show Eco-Smart Station screenshot 1"><img src="images/eco-smart/eco-smart.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart1.webp" data-alt="Eco-Smart Station photo 2" aria-label="Show Eco-Smart Station photo 2"><img src="images/eco-smart/eco-smart1.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart2.webp" data-alt="Eco-Smart Station photo 3" aria-label="Show Eco-Smart Station photo 3"><img src="images/eco-smart/eco-smart2.webp" alt="" loading="lazy"></button></div>
       </div>
       <div class="pb">
-        <h3>Eco-Smart Station (RainErgy)</h3>
-        <p class="sub">Thesis project · My role: System Developer &amp; Tester</p>
-        <p>An eco-friendly station that combines rainwater harvesting and hybrid renewable energy to provide accessible water and charging services.</p>
-        <h4>What I did</h4>
-        <ul><li>Developed and implemented parts of the system.</li><li>Executed system tests and functionality verification.</li><li>Troubleshot technical issues.</li><li>Evaluated system performance and reliability.</li><li>Collaborated with teammates throughout development.</li></ul>
-        <ul class="chips"><li>Arduino</li><li>ESP32</li><li>Sensors</li><li>IoT Systems</li></ul>
+        <div class="pb-head">
+          
+          <h3>Eco-Smart Station (RainErgy)</h3>
+          <p class="sub">Thesis project · My role: System Developer &amp; Tester</p>
+          <p>An eco-friendly station that combines rainwater harvesting and hybrid renewable energy to provide accessible water and charging services.</p>
+        </div>
+        <div class="pb-body">
+          <h4>What I did</h4>
+          <ul><li>Developed and implemented parts of the system.</li><li>Executed system tests and functionality verification.</li><li>Troubleshot technical issues.</li><li>Evaluated system performance and reliability.</li><li>Collaborated with teammates throughout development.</li></ul>
+          <ul class="chips"><li class="chip">Arduino</li><li class="chip">ESP32</li><li class="chip">Sensors</li><li class="chip">IoT Systems</li></ul>
+        </div>
       </div>
     </article>
 
