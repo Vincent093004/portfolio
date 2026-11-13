@@ -223,11 +223,11 @@ dialog.lb img{max-width:100%;max-height:88vh;display:block;margin:0 auto;border-
 
 /* ---------- contact ---------- */
 .ct .wrap{display:flex;flex-direction:column;align-items:center;text-align:center}
-.ct h2{font-size:clamp(2.6rem,6.5vw,5.6rem);max-width:16ch;margin-left:auto;margin-right:auto}
+.ct h2{font-size:clamp(2.6rem,7vw,7rem);max-width:none;width:100%;text-align:center}
 .ct .eyebrow{justify-content:center}
-.ct>.wrap>p.lead{max-width:56ch;margin-left:auto;margin-right:auto}
-.cl{max-width:720px;width:100%;margin:44px auto 40px;border-top:1px solid var(--g2);text-align:left}
-.cl a,.cl div{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 4px;border-bottom:1px solid var(--g2);text-decoration:none;word-break:break-word;font-weight:500;font-size:.98rem;transition:background .25s,padding .3s var(--ease),color .25s}
+.ct>.wrap>p.lead{max-width:80ch;margin-left:auto;margin-right:auto;text-align:center}
+.cl{max-width:none;width:100%;margin:44px auto 40px;border-top:1px solid var(--g2);text-align:left}
+.cl a,.cl div{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:26px 8px;font-size:clamp(1rem,1.6vw,1.3rem)!important;border-bottom:1px solid var(--g2);text-decoration:none;word-break:break-word;font-weight:500;font-size:.98rem;transition:background .25s,padding .3s var(--ease),color .25s}
 .cl a:hover{background:var(--g1);padding-left:16px;padding-right:16px;color:var(--ind)}
 .cl a>span:nth-child(2){margin-left:auto;text-align:right}
 .cl a .arr{opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .25s var(--ease);color:var(--ind)}
@@ -885,18 +885,12 @@ html[data-theme=dark] .qa-wip{background:#3a2a07;color:#fcd34d}
   <p class="eyebrow rv">06</p>
   <h2 class="rv">Let’s build better software together</h2>
   <p class="lead rv">I’m looking for internship opportunities in software quality assurance, and I’m happy to learn from experienced QA engineers.</p>
-  <form class="cf-form rv" id="cform" novalidate>
-    <label>Your name<input name="name" autocomplete="name" required placeholder="Jane Dela Cruz"></label>
-    <label>Your email<input name="email" type="email" autocomplete="email" required placeholder="jane@company.com"></label>
-    <label class="full">Message<textarea name="msg" required placeholder="Hi Vincent, we have a QA internship opening…"></textarea></label>
-    <div class="full row"><button class="pill b" type="submit">Send message</button><button class="pill o" type="button" id="copy">Copy email</button><span class="cf-st" id="cst" role="status"></span></div>
-  </form>
   <div class="cl rv">
-    <a href="mailto:yusonvincentbryan@gmail.com"><span class="muted">Email</span><span>yusonvincentbryan@gmail.com</span><span class="arr" aria-hidden="true">→</span></a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yusonvincentbryan@gmail.com&su=QA%20Internship%20Opportunity" target="_blank" rel="noopener"><span class="muted">Email</span><span>yusonvincentbryan@gmail.com</span><span class="arr" aria-hidden="true">→</span></a>
     <a href="https://github.com/Vincent093004" target="_blank" rel="noopener"><span class="muted">GitHub</span><span>github.com/Vincent093004</span><span class="arr" aria-hidden="true">↗</span></a>
   </div>
   <div class="btns rv">
-    <a class="pill b" href="mailto:yusonvincentbryan@gmail.com?subject=QA%20Internship%20Opportunity">Email Vincent</a>
+    <a class="pill b" href="https://mail.google.com/mail/?view=cm&fs=1&to=yusonvincentbryan@gmail.com&su=QA%20Internship%20Opportunity" target="_blank" rel="noopener">Email Vincent</a>
     <a class="pill o" href="resume.pdf" download>Download résumé (PDF)</a>
   </div>
 </div></section>
@@ -1288,24 +1282,6 @@ html[data-theme=dark] .qa-wip{background:#3a2a07;color:#fcd34d}
     newRound();
   })();
 
-  /* ---- contact form: opens the visitor's email app with everything filled in ---- */
-  (function(){
-    var f = document.getElementById('cform'), st = document.getElementById('cst');
-    var MAIL = 'yusonvincentbryan@gmail.com';
-    f.addEventListener('submit', function(e){
-      e.preventDefault();
-      var n = f.name.value.trim(), m = f.email.value.trim(), t = f.msg.value.trim();
-      if (!n || !t || !/^\S+@\S+\.\S+$/.test(m)) { st.textContent = 'Please fill in your name, a valid email and a message.'; return; }
-      var body = t + '\n\n— ' + n + ' (' + m + ')';
-      st.textContent = 'Opening your email app…';
-      location.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent('Portfolio message from ' + n) + '&body=' + encodeURIComponent(body);
-    });
-    document.getElementById('copy').addEventListener('click', function(){
-      function ok(){ st.textContent = 'Email copied: ' + MAIL; }
-      if (navigator.clipboard) navigator.clipboard.writeText(MAIL).then(ok, function(){ st.textContent = MAIL; }); else st.textContent = MAIL;
-    });
-  })();
-
   /* ---- QA evidence (data from the Test Scenario sheet; edit here) ---- */
   (function(){
     var D = [
@@ -1364,7 +1340,7 @@ html[data-theme=dark] .qa-wip{background:#3a2a07;color:#fcd34d}
       ['Education','Go to', go('education')], ['Contact','Go to', go('contact')],
       ['Toggle dark / light mode','Action', function(){ tbtn.click(); }],
       ['Download résumé','Action', function(){ var a = document.createElement('a'); a.href = 'resume.pdf'; a.download = ''; a.click(); }],
-      ['Email Vincent','Action', function(){ location.href = 'mailto:yusonvincentbryan@gmail.com?subject=QA%20Internship%20Opportunity'; }],
+      ['Email Vincent','Action', function(){ window.open('https://mail.google.com/mail/?view=cm&fs=1&to=yusonvincentbryan@gmail.com&su=QA%20Internship%20Opportunity', '_blank', 'noopener'); }],
       ['Open GitHub','Link', function(){ window.open('https://github.com/Vincent093004', '_blank', 'noopener'); }],
       ['Celebrate 🎉','Fun', function(){ confetti(innerWidth / 2, innerHeight / 3); }]
     ], shown = [], sel = 0;
