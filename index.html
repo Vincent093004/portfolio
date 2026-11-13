@@ -33,7 +33,7 @@ img{max-width:100%;display:block}
 :focus-visible{outline:2px solid var(--ind);outline-offset:3px;border-radius:6px}
 ::selection{background:var(--ind);color:#fff}
 
-.wrap{max-width:1400px;margin:0 auto;padding:0 clamp(20px,3.5vw,56px)}
+.wrap{max-width:1760px;margin:0 auto;padding:0 clamp(20px,4vw,88px)}
 section{padding:clamp(36px,4vw,56px) 0 clamp(56px,6.5vw,88px)}
 .lt{background:var(--w)} .gr{background:var(--p1)} .dk{background:var(--p2);color:var(--ind-d)}
 
@@ -175,9 +175,7 @@ dl{margin:0}
 .gal-main:hover img{transform:scale(1.02)}
 .gal-main::after{content:"View larger";position:absolute;right:16px;bottom:16px;background:rgba(11,31,77,.85);color:#fff;font:600 .72rem Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:999px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s var(--ease)}
 .gal-main:hover::after{opacity:1;transform:none}
-.gal-track{display:flex;height:100%;transition:transform .9s var(--ease);will-change:transform}
-.gal-track.snap{transition:none}
-.gal-track img{flex:0 0 100%;min-width:0}
+.gal-main.fading img{opacity:0}
 .gal-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.2vw,14px);padding:clamp(14px,2vw,20px) clamp(16px,2.6vw,28px);background:var(--ind-d);border-top:1px solid #1f3a7a}
 .gal-thumbs button{padding:0;border:0;border-radius:10px;overflow:hidden;aspect-ratio:21/9;background:#081a40;cursor:pointer;opacity:.45;box-shadow:inset 0 0 0 2px transparent;transition:opacity .25s,box-shadow .25s,transform .25s var(--ease)}
 .gal-thumbs button:hover{opacity:.85;transform:translateY(-2px)}
@@ -231,7 +229,7 @@ dialog.lb img{max-width:100%;max-height:88vh;display:block;margin:0 auto;border-
 .cl .muted{font-size:.92rem;font-weight:400}
 .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 
-footer{background:var(--ind-d);color:#9db4e6;padding:32px 0 calc(32px + env(safe-area-inset-bottom,0px));font-size:.88rem;text-align:center}
+footer{text-align:center;background:var(--ind-d);color:#9db4e6;padding:32px 0 calc(32px + env(safe-area-inset-bottom,0px));font-size:.88rem}
 
 /* ---------- richer reveal on scroll ---------- */
 .js .rv{opacity:0;translate:0 44px;scale:.97;filter:blur(8px);transition:opacity .9s var(--ease),translate .9s var(--ease),scale .9s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
@@ -648,87 +646,44 @@ section::after{transform:translateY(var(--py,0px))}
   lb.querySelector('.lb-close').addEventListener('click', function(){ lb.close(); });
   lb.addEventListener('click', function(e){ if (e.target === lb) lb.close(); });
 
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var INTERVAL = 4500;
-
-  document.querySelectorAll('[data-gal]').forEach(function(g, gi){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-gal]').forEach(function(g){
     var main = g.querySelector('.gal-main');
-    var first = main.querySelector('img');
-    var thumbs = Array.prototype.slice.call(g.querySelectorAll('.gal-thumbs button'));
-    var n = thumbs.length;
-
-    /* build a sliding track: one slide per thumbnail, plus a clone of the first for a seamless loop */
-    var track = document.createElement('div');
-    track.className = 'gal-track';
-    main.insertBefore(track, first);
-    thumbs.forEach(function(b, i){
-      var im = i === 0 ? first : first.cloneNode(false);
-      im.src = b.dataset.src;
-      im.alt = b.dataset.alt;
-      track.appendChild(im);
-    });
-    var clone = first.cloneNode(false);
-    clone.src = thumbs[0].dataset.src;
-    clone.alt = '';
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-
-    var idx = 0, timer = null, paused = false, visible = false;
-
-    function mark(){
-      var cur = idx % n;
-      thumbs.forEach(function(x, i){ x.setAttribute('aria-pressed', i === cur ? 'true' : 'false'); });
-    }
-    function go(i, instant){
-      idx = i;
-      track.classList.toggle('snap', !!instant);
-      track.style.transform = 'translateX(' + (-100 * idx) + '%)';
-      mark();
-    }
-    track.addEventListener('transitionend', function(e){
-      if (e.target !== track) return;
-      if (idx >= n){            /* landed on the clone of slide 1: jump back to the real one */
-        go(0, true);
-        void track.offsetWidth;
-        track.classList.remove('snap');
+    var img = main.querySelector('img');
+    var thumbs = g.querySelectorAll('.gal-thumbs button');
+    var list = Array.prototype.slice.call(thumbs);
+    var cur = 0, timer = null, paused = false;
+    function show(i, manual){
+      var b = list[i];
+      if (!b) return;
+      cur = i;
+      if (img.getAttribute('src') !== b.dataset.src) {
+        main.classList.add('fading');
+        setTimeout(function(){
+          img.src = b.dataset.src;
+          img.alt = b.dataset.alt;
+          main.classList.remove('fading');
+        }, 200);
       }
-    });
-    function next(){ go(idx >= n ? 1 : idx + 1); }
-    function schedule(delay){
-      clearTimeout(timer);
-      if (reduce || paused || !visible) return;
-      timer = setTimeout(function(){ next(); schedule(INTERVAL); }, delay);
+      list.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      if (manual) restart();
     }
-
-    thumbs.forEach(function(b, i){
-      b.addEventListener('click', function(){
-        go(i);
-        schedule(INTERVAL);
-      });
-    });
-
-    /* pause while the visitor is looking closely */
-    g.addEventListener('mouseenter', function(){ paused = true; schedule(0); });
-    g.addEventListener('mouseleave', function(){ paused = false; schedule(INTERVAL); });
-    g.addEventListener('focusin', function(){ paused = true; schedule(0); });
-    g.addEventListener('focusout', function(){ paused = false; schedule(INTERVAL); });
-
-    /* only run while on screen; stagger the two cards so they don't flip together */
-    if ('IntersectionObserver' in window){
-      new IntersectionObserver(function(entries){
-        visible = entries[0].isIntersecting;
-        schedule(INTERVAL + gi * 1800);
-      }, {threshold: .35}).observe(g);
-    } else { visible = true; schedule(INTERVAL + gi * 1800); }
-
+    function restart(){
+      clearInterval(timer);
+      if (reduce) return;
+      timer = setInterval(function(){ if (!paused) show((cur + 1) % list.length); }, 3500);
+    }
+    list.forEach(function(b, i){ b.addEventListener('click', function(){ show(i, true); }); });
+    g.addEventListener('mouseenter', function(){ paused = true; });
+    g.addEventListener('mouseleave', function(){ paused = false; });
+    g.addEventListener('focusin', function(){ paused = true; });
+    g.addEventListener('focusout', function(){ paused = false; });
+    restart();
     main.addEventListener('click', function(){
-      var cur = track.children[idx % n];
-      lbImg.src = cur.getAttribute('src');
-      lbImg.alt = cur.alt;
-      paused = true; schedule(0);
+      lbImg.src = img.getAttribute('src');
+      lbImg.alt = img.alt;
       lb.showModal();
     });
-    lb.addEventListener('close', function(){ paused = false; schedule(INTERVAL); });
   });
 })();
 </script>
