@@ -154,7 +154,7 @@ dl{margin:0}
 .sk .chip:hover{background:var(--ind);color:#fff;border-color:var(--ind);transform:translateY(-2px)}
 
 /* ---------- experience ---------- */
-.job{border-top:2px solid var(--ind);padding-top:36px;display:grid;gap:32px;grid-template-columns:minmax(0,1fr)}
+.job{border-top:1px solid var(--g2);padding-top:36px;display:grid;gap:32px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:900px){.job{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:56px}}
 .job h3{font-size:clamp(1.8rem,2.8vw,2.4rem);line-height:1.02;margin-bottom:14px}
 .job>div:last-child>p{font-size:1.12rem;color:#1e2a44}
@@ -267,11 +267,12 @@ section::before,section::after{content:"";position:absolute;pointer-events:none;
   radial-gradient(500px 360px at 0% 100%,rgba(96,165,250,.18),transparent 70%),
   radial-gradient(500px 360px at 100% 100%,rgba(96,165,250,.18),transparent 70%)}
 
+/* ---------- hero → about seam: fade the pattern in so no hard edge or empty gap ---------- */
+#about{padding-top:clamp(28px,3.5vw,48px)}
+#about::before{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 240px);mask-image:linear-gradient(to bottom,transparent 0,#000 240px)}
+#about::after{display:none}
+
 /* ---------- headings ---------- */
-h2::after{content:"";display:block;width:84px;height:6px;border-radius:6px;margin-top:18px;
-  background:linear-gradient(90deg,#2563eb,#60a5fa);transform:scaleX(0);transform-origin:left;transition:transform 1s var(--ease) .35s}
-h2.rv.in::after{transform:scaleX(1)}
-.ct h2::after{margin-left:auto;margin-right:auto;transform-origin:center}
 .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease) .2s}
 .rv.in .eyebrow::before,.eyebrow.rv.in::before{transform:scaleX(1)}
 
@@ -290,6 +291,61 @@ h2.rv.in::after{transform:scaleX(1)}
 .pc::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
   background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(96,165,250,.18),transparent 60%);opacity:0;transition:opacity .4s}
 .pc:hover::after{opacity:1}
+
+/* ---------- more life: stats, marquee, ghosts, tilt ---------- */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:clamp(48px,6vw,80px);border-top:1px solid var(--g2)}
+@media(min-width:800px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stats>div{padding:28px 20px 8px 0;transition:transform .35s var(--ease)}
+.stats>div:hover{transform:translateY(-4px)}
+.stats b{display:block;font:400 clamp(2.8rem,6vw,5rem)/1 Anton,Impact,sans-serif;background:linear-gradient(120deg,#0b1f4d,#2563eb 60%,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats span{display:block;margin-top:8px;font-size:.92rem;color:var(--ink2);max-width:22ch}
+
+.mq{overflow:hidden;background:var(--ind-d);color:#fff;padding:18px 0;white-space:nowrap;border-block:1px solid #1f3a7a}
+.mq-t{display:inline-flex;animation:mq 38s linear infinite}
+.mq span{font:400 clamp(1.4rem,3vw,2.2rem)/1 Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:0 22px;display:inline-flex;align-items:center;gap:44px}
+.mq span::after{content:"✦";color:#60a5fa;font-size:.7em}
+.mq.rev{background:var(--p1);color:transparent;border-color:#bfd7fb}
+.mq.rev span{-webkit-text-stroke:1px #2563eb}
+.mq.rev .mq-t{animation-direction:reverse;animation-duration:46s}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+@media(min-width:900px){.job>div:first-child{position:sticky;top:96px;align-self:start}}
+.live{display:inline-flex;align-items:center;gap:10px;margin-top:6px;padding:6px 14px;border-radius:999px;background:#e8f1ff;color:var(--ind-d);font-size:.8rem;font-weight:600}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:#22c55e;animation:livep 1.8s ease-out infinite}
+@keyframes livep{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}80%,100%{box-shadow:0 0 0 9px rgba(34,197,94,0)}}
+
+.sk>div{position:relative;transition:background .35s}
+.sk>div:hover{background:linear-gradient(90deg,rgba(255,255,255,.6),transparent 80%)}
+
+.ed>div{position:relative}
+
+.ct .wrap::before{content:"QA";position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:-1;font:400 clamp(14rem,42vw,34rem)/1 Anton,Impact,sans-serif;color:transparent;-webkit-text-stroke:1px rgba(37,99,235,.16);pointer-events:none}
+
+.pc{transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out,box-shadow .4s var(--ease)}
+.pc:hover{transform:perspective(1100px) translateY(-4px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+
+/* ---------- section-by-section extras ---------- */
+#skills .wrap::before,#experience .wrap::before,#work .wrap::before{position:absolute;right:clamp(20px,3.5vw,56px);top:-8px;z-index:-1;font:400 clamp(5rem,15vw,13rem)/1 Anton,Impact,sans-serif;text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(37,99,235,.26);pointer-events:none;white-space:nowrap}
+#skills .wrap::before{content:"Toolkit"}
+#experience .wrap::before{content:"2026"}
+#work .wrap::before{content:"Projects"}
+@media(max-width:599px){#skills .wrap::before,#experience .wrap::before,#work .wrap::before{display:none}}
+
+.sk h3 small{display:block;margin-top:6px;font:600 .74rem Inter,sans-serif;letter-spacing:.1em;text-transform:none;color:var(--g3)}
+.sk>div:first-child .chip{background:#e0ebff;border-color:var(--ind)}
+
+.job ul{position:relative}
+
+.gal-tag{position:absolute;left:16px;top:16px;z-index:2;background:rgba(11,31,77,.85);color:#fff;font:600 .72rem Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:999px;backdrop-filter:blur(4px)}
+
+.ed li{position:relative}
+.ed li::after{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--ind);box-shadow:0 0 0 4px rgba(37,99,235,.18)}
+
+.ct::after{width:420px;aspect-ratio:1;right:-140px;left:auto;top:40px;bottom:auto;border-radius:50%;border:0;box-shadow:none;background:radial-gradient(circle,rgba(37,99,235,.22),transparent 68%);animation:drift 16s ease-in-out infinite alternate}
+.ct .pill.b{animation:glow 2.6s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 10px 24px -10px rgba(37,99,235,.7)}50%{box-shadow:0 10px 38px -4px rgba(96,165,250,.95)}}
+
+section::after{transform:translateY(var(--py,0px))}
 
 /* ---------- responsive ---------- */
 @media(max-width:899px){
@@ -331,7 +387,7 @@ h2.rv.in::after{transform:scaleX(1)}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .rv{opacity:1;translate:none;scale:none;filter:none}
-  h2::after,.eyebrow::before{transform:none}
+  .eyebrow::before{transform:none}
 }
 </style>
 <base target="_blank">
@@ -392,7 +448,15 @@ h2.rv.in::after{transform:scaleX(1)}
       <div><dt>Focus</dt><dd>Software QA</dd></div>
     </dl>
   </div>
+  <div class="stats rv">
+    <div><b>2025</b><span>System-Making Contest Winner</span></div>
+    <div><b>2026</b><span>Testing professionally since April</span></div>
+    <div><b>2</b><span>Featured projects tested and built</span></div>
+    <div><b>2027</b><span>Expected graduation</span></div>
+  </div>
 </div></section>
+
+<div class="mq " aria-hidden="true"><div class="mq-t"><span>Manual Testing</span><span>Functional Testing</span><span>Test Case Development</span><span>Defect Reporting</span><span>Selenium WebDriver</span><span>Jira</span><span>Python</span><span>Agile</span><span>Arduino</span><span>ESP32</span><span>Manual Testing</span><span>Functional Testing</span><span>Test Case Development</span><span>Defect Reporting</span><span>Selenium WebDriver</span><span>Jira</span><span>Python</span><span>Agile</span><span>Arduino</span><span>ESP32</span></div></div>
 
 <section class="dk" id="skills"><div class="wrap">
   <p class="eyebrow rv">02</p>
@@ -412,7 +476,7 @@ h2.rv.in::after{transform:scaleX(1)}
   <p class="eyebrow rv">03</p>
   <h2 class="rv">Experience</h2>
   <div class="job rv">
-    <div><h3>Part-time Software Tester</h3><p class="muted">BEMO Academic Consulting<br>April 2026 – Present</p></div>
+    <div><h3>Part-time Software Tester</h3><p class="muted">BEMO Academic Consulting<br>April 2026 – Present</p><span class="live">Currently testing</span></div>
     <div>
       <p>I evaluate web-based applications and verify that features work according to their intended requirements.</p>
       <ul>
@@ -432,7 +496,7 @@ h2.rv.in::after{transform:scaleX(1)}
   <div class="projects">
     <article class="pc rv">
       <div class="gal" data-gal>
-        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/job-interview/job-interview.webp" alt="JobInterviewPro screenshot 1" width="1600" height="800"></button>
+        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/job-interview/job-interview.webp" alt="JobInterviewPro screenshot 1" width="1600" height="800"><span class="gal-tag">Project 01 · Web app</span></button>
         <div class="gal-thumbs" role="group" aria-label="JobInterviewPro screenshots"><button type="button" aria-pressed="true" data-src="images/job-interview/job-interview.webp" data-alt="JobInterviewPro screenshot 1" aria-label="Show JobInterviewPro screenshot 1"><img src="images/job-interview/job-interview.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/job-interview/job-interview1.webp" data-alt="JobInterviewPro screenshot 2" aria-label="Show JobInterviewPro screenshot 2"><img src="images/job-interview/job-interview1.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/job-interview/job-interview2.webp" data-alt="JobInterviewPro screenshot 3" aria-label="Show JobInterviewPro screenshot 3"><img src="images/job-interview/job-interview2.webp" alt="" loading="lazy"></button></div>
       </div>
       <div class="pb">
@@ -451,7 +515,7 @@ h2.rv.in::after{transform:scaleX(1)}
     </article>
     <article class="pc rv">
       <div class="gal" data-gal>
-        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/eco-smart/eco-smart.webp" alt="Eco-Smart Station screenshot 1" width="1600" height="800"></button>
+        <button class="gal-main" type="button" aria-label="View larger image"><img src="images/eco-smart/eco-smart.webp" alt="Eco-Smart Station screenshot 1" width="1600" height="800"><span class="gal-tag">Project 02 · IoT thesis</span></button>
         <div class="gal-thumbs" role="group" aria-label="Eco-Smart Station (RainErgy) screenshots"><button type="button" aria-pressed="true" data-src="images/eco-smart/eco-smart.webp" data-alt="Eco-Smart Station screenshot 1" aria-label="Show Eco-Smart Station screenshot 1"><img src="images/eco-smart/eco-smart.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart1.webp" data-alt="Eco-Smart Station photo 2" aria-label="Show Eco-Smart Station photo 2"><img src="images/eco-smart/eco-smart1.webp" alt="" loading="lazy"></button><button type="button" aria-pressed="false" data-src="images/eco-smart/eco-smart2.webp" data-alt="Eco-Smart Station photo 3" aria-label="Show Eco-Smart Station photo 3"><img src="images/eco-smart/eco-smart2.webp" alt="" loading="lazy"></button></div>
       </div>
       <div class="pb">
@@ -486,6 +550,8 @@ h2.rv.in::after{transform:scaleX(1)}
       <li><b>ASA Foundation Scholar</b><span>2023–2027</span></li></ul></div>
   </div>
 </div></section>
+
+<div class="mq rev" aria-hidden="true"><div class="mq-t"><span>Manual Testing</span><span>Functional Testing</span><span>Test Case Development</span><span>Defect Reporting</span><span>Selenium WebDriver</span><span>Jira</span><span>Python</span><span>Agile</span><span>Arduino</span><span>ESP32</span><span>Manual Testing</span><span>Functional Testing</span><span>Test Case Development</span><span>Defect Reporting</span><span>Selenium WebDriver</span><span>Jira</span><span>Python</span><span>Agile</span><span>Arduino</span><span>ESP32</span></div></div>
 
 <section class="lt ct" id="contact"><div class="wrap">
   <p class="eyebrow rv">06</p>
@@ -540,8 +606,26 @@ h2.rv.in::after{transform:scaleX(1)}
       var r=c.getBoundingClientRect();
       c.style.setProperty('--mx',(e.clientX-r.left)+'px');
       c.style.setProperty('--my',(e.clientY-r.top)+'px');
+      if(e.pointerType==='mouse'){
+        c.style.setProperty('--rx',((.5-(e.clientY-r.top)/r.height)*5).toFixed(2)+'deg');
+        c.style.setProperty('--ry',(((e.clientX-r.left)/r.width-.5)*6).toFixed(2)+'deg');
+      }
     });
+    c.addEventListener('pointerleave',function(){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
   });
+
+  /* skill counts */
+  document.querySelectorAll('.sk>div').forEach(function(d){
+    var n=d.querySelectorAll('.chip').length, t=document.createElement('small');
+    t.textContent=n+(n>1?' skills':' skill'); d.querySelector('h3').appendChild(t);
+  });
+
+  /* gentle parallax on section orbs */
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    var secs=document.querySelectorAll('section'),tick=false;
+    function par(){tick=false;secs.forEach(function(x){var r=x.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)x.style.setProperty('--py',(-r.top*.08).toFixed(1)+'px')})}
+    addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(par)}},{passive:true});par();
+  }
 
   /* reveal on scroll */
   var rv = document.querySelectorAll('.rv');
